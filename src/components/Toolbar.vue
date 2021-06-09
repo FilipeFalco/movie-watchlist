@@ -30,7 +30,10 @@
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/_variables.scss";
+
 .toolbar {
+    color: $background-color;
   .toolbar--title {
     font-family: 'Roboto';
   }

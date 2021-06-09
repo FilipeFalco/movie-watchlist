@@ -7,10 +7,10 @@ module.exports = {
       scss: {
         prependData() {
           return `
-            @import "~@/assets/scss/main.scss"
+            @import "~@/assets/scss/main.scss";
           `;
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 }
