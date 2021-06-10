@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import FormRegister from '../components/FormRegister.vue'
+import FormRegister from '../components/FormRegister.vue';
+import firebase from 'firebase';
 
 export default {
     name: 'Register',
@@ -34,8 +35,24 @@ export default {
         },
 
         createFirebaseUser(user) {
-            console.log(user)
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(user.email, user.password)
+                .then(data => {
+                    data.user
+                        .updateProfile({
+                            diplayName: user.name
+                        })
+                        .then(() => {
+                            this.$router.push({ name: 'home' })
+                        });
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
+                
         }
+        
     },
 }
 </script>

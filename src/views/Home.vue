@@ -22,6 +22,8 @@
 
 <script>
 import FormLogin from '../components/FormLogin.vue'
+import firebase from 'firebase';
+import { mapActions } from 'vuex';
 
 export default {
     name: 'Home',
@@ -33,8 +35,22 @@ export default {
             this.$router.push({ name: name })
         },
 
+        ...mapActions(['AddUser']),
+
         loginWithFirebase(user) {
-            console.log(user);
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(user.email, user.password)
+                .then(data => {
+                    this.addUser({
+                        name: data.user.displayName,
+                        email: data.user.email
+                    })
+                    this.$router.push({ name: 'dashboard' });
+                })
+                .catch(err => {
+                    this.error = err.message;
+                });
         }
     }
 }
